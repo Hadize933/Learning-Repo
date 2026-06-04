@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FreelanceFlow — Premium freelancer management dashboard">
+  <title>FreelanceFlow | Freelancer Management Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-logo">SH</div>
+      <div class="loader-bar"><span></span></div>
+      <p>Loading your workspace...</p>
+    </div>
+  </div>
+
+  <!-- Onboarding Welcome -->
+  <div id="onboarding" class="onboarding" role="dialog" aria-labelledby="onboarding-title">
+    <div class="onboarding-backdrop"></div>
+    <div class="onboarding-card glass">
+      <div class="onboarding-visual">
+        <div class="onboarding-orbs">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="onboarding-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+      <div class="onboarding-content">
+        <span class="badge gradient-badge">Welcome</span>
+        <h1 id="onboarding-title">Welcome to FreelanceFlow</h1>
+        <p>Your all-in-one command center for clients, projects, invoices, and productivity — built for modern freelancers.</p>
+        <ul class="onboarding-features">
+          <li><span class="check">✓</span> Manage clients & projects in one place</li>
+          <li><span class="check">✓</span> Track earnings & invoices effortlessly</li>
+          <li><span class="check">✓</span> Boost productivity with smart analytics</li>
+        </ul>
+        <div class="onboarding-actions">
+          <button type="button" class="btn btn-primary" id="onboarding-start">Get Started</button>
+          <button type="button" class="btn btn-ghost" id="onboarding-skip">Skip tour</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Shell -->
+  <div class="app" id="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="logo" data-nav="dashboard">
+          <span class="logo-icon">SH</span>
+          <span class="logo-text">FreelanceFlow</span>
+        </a>
+        <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#" class="nav-link active" data-nav="dashboard" data-tooltip="Dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            <span>Dashboard</span>
+          </a></li>
+          <li><a href="#" class="nav-link" data-nav="clients" data-tooltip="Clients">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Clients</span>
+          </a></li>
+          <li><a href="#" class="nav-link" data-nav="projects" data-tooltip="Projects">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            <span>Projects</span>
+          </a></li>
+          <li><a href="#" class="nav-link" data-nav="payments" data-tooltip="Payments">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            <span>Payments</span>
+          </a></li>
+          <li><a href="#" class="nav-link" data-nav="tasks" data-tooltip="Tasks">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Tasks</span>
+          </a></li>
+          <li class="nav-divider"></li>
+          <li class="nav-group">
+            <button type="button" class="nav-group-toggle" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              <span>More</span>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <ul class="nav-submenu">
+              <li><a href="#" class="nav-link" data-nav="settings" data-tooltip="Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Settings</span>
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="productivity-score glass-sm">
+          <div class="score-ring" data-score="87">
+            <svg viewBox="0 0 36 36"><path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/><path class="score-fill" stroke-dasharray="87, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/></svg>
+            <span class="score-value">87</span>
+          </div>
+          <div>
+            <p class="score-label">Productivity Score</p>
+            <p class="score-sub">+12% this week</p>
+          </div>
+        </div>
+        <div class="user-mini">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="User avatar" width="40" height="40">
+          <div>
+            <p class="user-name">Shams Al Hadi</p>
+            <p class="user-role">Freelance Designer</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <button type="button" class="mobile-menu-btn" id="mobile-menu" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="search" id="global-search" placeholder="Search clients, projects, invoices..." aria-label="Global search">
+          <kbd>Ctrl K</kbd>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+          <button type="button" class="icon-btn notification-btn" id="notif-toggle" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notif-badge">4</span>
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="quick-add-btn">+ Quick Add</button>
+        </div>
+      </header>
+
+      <!-- Notification Panel -->
+      <div class="notif-panel glass" id="notif-panel" hidden>
+        <div class="notif-header">
+          <h3>Notifications</h3>
+          <button type="button" class="text-btn" id="mark-all-read">Mark all read</button>
+        </div>
+        <ul class="notif-list" id="notif-list"></ul>
+      </div>
+
+      <main class="main-content" id="main-content">
+        <!-- ========== DASHBOARD ========== -->
+        <section class="page active" id="page-dashboard" data-page="dashboard">
+          <div class="page-header">
+            <div>
+              <h1>Dashboard Overview</h1>
+              <p class="subtitle">Welcome back, Alex — here's what's happening today.</p>
+            </div>
+            <div class="page-header-actions">
+              <select class="select" id="dashboard-period">
+                <option>Last 7 days</option>
+                <option selected>Last 30 days</option>
+                <option>Last 90 days</option>
+              </select>
+              <button type="button" class="btn btn-secondary" id="export-report">Export Report</button>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <button type="button" class="quick-action" data-action="client">
+              <span class="qa-icon" style="--hue: 250">+</span>
+              <span>New Client</span>
+            </button>
+            <button type="button" class="quick-action" data-action="invoice">
+              <span class="qa-icon" style="--hue: 160">$</span>
+              <span>Create Invoice</span>
+            </button>
+            <button type="button" class="quick-action" data-action="task">
+              <span class="qa-icon" style="--hue: 30">✓</span>
+              <span>Add Task</span>
+            </button>
+            <button type="button" class="quick-action" data-action="meeting">
+              <span class="qa-icon" style="--hue: 320">📅</span>
+              <span>Schedule Meeting</span>
+            </button>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="stats-grid">
+            <article class="stat-card glass" data-animate="counter" data-target="24">
+              <div class="stat-icon clients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+              <div class="stat-body">
+                <p class="stat-label">Total Clients</p>
+                <p class="stat-value"><span class="counter">0</span></p>
+                <p class="stat-change positive">+3 this month</p>
+              </div>
+            </article>
+            <article class="stat-card glass" data-animate="counter" data-target="12">
+              <div class="stat-icon projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+              <div class="stat-body">
+                <p class="stat-label">Active Projects</p>
+                <p class="stat-value"><span class="counter">0</span></p>
+                <p class="stat-change positive">2 due this week</p>
+              </div>
+            </article>
+            <article class="stat-card glass" data-animate="counter" data-target="7">
+              <div class="stat-icon invoices"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+              <div class="stat-body">
+                <p class="stat-label">Pending Invoices</p>
+                <p class="stat-value"><span class="counter">0</span></p>
+                <p class="stat-change negative">$4,280 outstanding</p>
+              </div>
+            </article>
+            <article class="stat-card glass highlight" data-animate="counter" data-target="12840" data-prefix="$" data-format="currency">
+              <div class="stat-icon earnings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <div class="stat-body">
+                <p class="stat-label">Monthly Earnings</p>
+                <p class="stat-value"><span class="counter">$0</span></p>
+                <p class="stat-change positive">+18% vs last month</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Productivity Chart -->
+            <article class="card glass chart-card span-2">
+              <div class="card-header">
+                <h2>Productivity Overview</h2>
+                <div class="chart-legend" id="productivity-legend"></div>
+              </div>
+              <canvas id="productivity-chart" height="220"></canvas>
+            </article>
+
+            <!-- Earnings Chart -->
+            <article class="card glass chart-card">
+              <div class="card-header">
+                <h2>Earnings</h2>
+                <span class="badge success">+24%</span>
+              </div>
+              <canvas id="earnings-chart" height="220"></canvas>
+            </article>
+
+            <!-- Project Completion Stats -->
+            <article class="card glass">
+              <div class="card-header">
+                <h2>Project Completion</h2>
+              </div>
+              <div class="completion-stats" id="completion-stats"></div>
+            </article>
+
+            <!-- Upcoming Meetings -->
+            <article class="card glass">
+              <div class="card-header">
+                <h2>Upcoming Meetings</h2>
+                <a href="#" class="text-btn">View all</a>
+              </div>
+              <ul class="meetings-list" id="meetings-list"></ul>
+            </article>
+
+            <!-- Recent Activity -->
+            <article class="card glass">
+              <div class="card-header">
+                <h2>Recent Activity</h2>
+              </div>
+              <ul class="activity-list" id="activity-list"></ul>
+            </article>
+
+            <!-- Activity Timeline -->
+            <article class="card glass span-2">
+              <div class="card-header">
+                <h2>Activity Timeline</h2>
+                <span class="text-muted">Today</span>
+              </div>
+              <div class="timeline" id="activity-timeline"></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ========== CLIENTS ========== -->
+        <section class="page" id="page-clients" data-page="clients">
+          <div class="page-header">
+            <div>
+              <h1>Client Management</h1>
+              <p class="subtitle">Manage relationships, contacts, and payment status.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-client-btn">+ Add Client</button>
+          </div>
+
+          <div class="toolbar glass-sm">
+            <div class="search-inline">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input type="search" id="client-search" placeholder="Search clients...">
+            </div>
+            <select class="select" id="client-filter-status">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select class="select" id="client-sort">
+              <option value="name">Sort by Name</option>
+              <option value="projects">Sort by Projects</option>
+              <option value="revenue">Sort by Revenue</option>
+            </select>
+            <div class="view-toggle">
+              <button type="button" class="view-btn active" data-view="grid" aria-label="Grid view">▦</button>
+              <button type="button" class="view-btn" data-view="table" aria-label="Table view">☰</button>
+            </div>
+          </div>
+
+          <div class="clients-grid" id="clients-container"></div>
+          <div class="table-wrap hidden" id="clients-table-wrap">
+            <table class="data-table" id="clients-table">
+              <thead>
+                <tr>
+                  <th data-sort="name">Client <span class="sort-icon">↕</span></th>
+                  <th data-sort="email">Email</th>
+                  <th data-sort="projects">Projects</th>
+                  <th data-sort="status">Status</th>
+                  <th data-sort="payment">Payment</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="clients-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========== PROJECTS ========== -->
+        <section class="page" id="page-projects" data-page="projects">
+          <div class="page-header">
+            <div>
+              <h1>Project Management</h1>
+              <p class="subtitle">Track progress, deadlines, and deliverables.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-project-btn">+ New Project</button>
+          </div>
+
+          <div class="projects-grid" id="projects-cards"></div>
+
+          <div class="projects-bottom">
+            <!-- Kanban Board -->
+            <article class="card glass kanban-section">
+              <div class="card-header">
+                <h2>Task Board</h2>
+                <button type="button" class="btn btn-ghost btn-sm" id="add-kanban-task">+ Add Task</button>
+              </div>
+              <div class="kanban" id="kanban-board">
+                <div class="kanban-column" data-status="todo">
+                  <h3>To Do <span class="count">0</span></h3>
+                  <div class="kanban-tasks" data-drop="todo"></div>
+                </div>
+                <div class="kanban-column" data-status="progress">
+                  <h3>In Progress <span class="count">0</span></h3>
+                  <div class="kanban-tasks" data-drop="progress"></div>
+                </div>
+                <div class="kanban-column" data-status="review">
+                  <h3>Review <span class="count">0</span></h3>
+                  <div class="kanban-tasks" data-drop="review"></div>
+                </div>
+                <div class="kanban-column" data-status="done">
+                  <h3>Done <span class="count">0</span></h3>
+                  <div class="kanban-tasks" data-drop="done"></div>
+                </div>
+              </div>
+            </article>
+
+            <div class="projects-side">
+              <!-- File Upload -->
+              <article class="card glass">
+                <div class="card-header"><h2>Project Files</h2></div>
+                <div class="upload-zone" id="upload-zone">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                  <p>Drag & drop files here</p>
+                  <span>or click to browse</span>
+                  <input type="file" id="file-input" multiple hidden>
+                </div>
+                <ul class="file-list" id="file-list"></ul>
+              </article>
+
+              <!-- Project Analytics -->
+              <article class="card glass">
+                <div class="card-header"><h2>Project Analytics</h2></div>
+                <canvas id="project-analytics-chart" height="180"></canvas>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== PAYMENTS ========== -->
+        <section class="page" id="page-payments" data-page="payments">
+          <div class="page-header">
+            <div>
+              <h1>Payments & Invoices</h1>
+              <p class="subtitle">Track revenue, invoices, and payment history.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="generate-invoice-btn">Generate Invoice</button>
+          </div>
+
+          <div class="payment-stats">
+            <article class="mini-stat glass">
+              <p>Total Revenue</p>
+              <h3 data-counter="48200" data-prefix="$" data-format="currency">$0</h3>
+            </article>
+            <article class="mini-stat glass">
+              <p>Paid This Month</p>
+              <h3 data-counter="12840" data-prefix="$" data-format="currency">$0</h3>
+            </article>
+            <article class="mini-stat glass">
+              <p>Outstanding</p>
+              <h3 data-counter="4280" data-prefix="$" data-format="currency">$0</h3>
+            </article>
+          </div>
+
+          <div class="payments-grid">
+            <article class="card glass span-2">
+              <div class="card-header">
+                <h2>Revenue Analytics</h2>
+              </div>
+              <canvas id="revenue-chart" height="240"></canvas>
+            </article>
+            <article class="card glass">
+              <div class="card-header"><h2>Payment Status</h2></div>
+              <div class="donut-wrap">
+                <canvas id="payment-status-chart" width="160" height="160"></canvas>
+                <ul class="donut-legend" id="payment-legend"></ul>
+              </div>
+            </article>
+          </div>
+
+          <article class="card glass">
+            <div class="card-header">
+              <h2>Invoices</h2>
+              <div class="toolbar-inline">
+                <input type="search" id="invoice-search" placeholder="Search invoices..." class="input-sm">
+                <select class="select select-sm" id="invoice-filter">
+                  <option value="all">All</option>
+                  <option value="paid">Paid</option>
+                  <option value="pending">Pending</option>
+                  <option value="unpaid">Unpaid</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="invoices-table">
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Client</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="invoices-body"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <div class="card-header"><h2>Payment History</h2></div>
+            <ul class="payment-history" id="payment-history"></ul>
+          </article>
+        </section>
+
+        <!-- ========== TASKS ========== -->
+        <section class="page" id="page-tasks" data-page="tasks">
+          <div class="page-header">
+            <div>
+              <h1>Task Management</h1>
+              <p class="subtitle">Organize your work with priorities and deadlines.</p>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-todo-btn">+ Add Task</button>
+          </div>
+
+          <div class="tasks-layout">
+            <article class="card glass todo-section">
+              <div class="card-header">
+                <h2>To-Do List</h2>
+                <select class="select select-sm" id="todo-filter">
+                  <option value="all">All Tasks</option>
+                  <option value="active">Active</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+              <ul class="todo-list" id="todo-list"></ul>
+              <form class="todo-add-form" id="todo-add-form">
+                <input type="text" id="todo-input" placeholder="Add a new task..." autocomplete="off">
+                <select id="todo-priority" class="select select-sm">
+                  <option value="low">Low</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Add</button>
+              </form>
+            </article>
+
+            <article class="card glass calendar-section">
+              <div class="card-header">
+                <h2>Calendar</h2>
+                <div class="calendar-nav">
+                  <button type="button" id="cal-prev" aria-label="Previous month">‹</button>
+                  <span id="cal-month-label">May 2026</span>
+                  <button type="button" id="cal-next" aria-label="Next month">›</button>
+                </div>
+              </div>
+              <div class="calendar" id="calendar"></div>
+              <div class="calendar-events" id="calendar-events">
+                <h3>Today's Events</h3>
+                <ul id="cal-events-list"></ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ========== SETTINGS ========== -->
+        <section class="page" id="page-settings" data-page="settings">
+          <div class="page-header">
+            <div>
+              <h1>Settings</h1>
+              <p class="subtitle">Customize your workspace and preferences.</p>
+            </div>
+          </div>
+
+          <div class="settings-layout">
+            <nav class="settings-nav glass-sm">
+              <button type="button" class="settings-tab active" data-tab="profile">Profile</button>
+              <button type="button" class="settings-tab" data-tab="theme">Theme</button>
+              <button type="button" class="settings-tab" data-tab="notifications">Notifications</button>
+              <button type="button" class="settings-tab" data-tab="security">Security</button>
+            </nav>
+
+            <div class="settings-panels">
+              <!-- Profile -->
+              <div class="settings-panel active" id="settings-profile">
+                <article class="card glass">
+                  <h2>Profile Settings</h2>
+                  <form class="settings-form" id="profile-form">
+                    <div class="avatar-upload">
+                      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="Profile" id="profile-avatar">
+                      <button type="button" class="btn btn-secondary btn-sm">Change Photo</button>
+                    </div>
+                    <div class="form-row">
+                      <label>Full Name<input type="text" value="Alex Morgan" name="name"></label>
+                      <label>Email<input type="email" value="alex@freelanceflow.io" name="email"></label>
+                    </div>
+                    <div class="form-row">
+                      <label>Job Title<input type="text" value="Freelance Designer" name="title"></label>
+                      <label>Timezone
+                        <select name="timezone">
+                          <option>UTC-8 (Pacific)</option>
+                          <option selected>UTC-5 (Eastern)</option>
+                          <option>UTC+0 (GMT)</option>
+                        </select>
+                      </label>
+                    </div>
+                    <label>Bio<textarea rows="3" name="bio">Creative freelancer specializing in brand identity and UI design.</textarea></label>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </form>
+                </article>
+              </div>
+
+              <!-- Theme -->
+              <div class="settings-panel" id="settings-theme">
+                <article class="card glass">
+                  <h2>Theme Customization</h2>
+                  <div class="theme-options">
+                    <button type="button" class="theme-option" data-theme-set="dark">
+                      <span class="theme-preview dark-preview"></span>
+                      <span>Dark</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-set="light">
+                      <span class="theme-preview light-preview"></span>
+                      <span>Light</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme-set="auto">
+                      <span class="theme-preview auto-preview"></span>
+                      <span>System</span>
+                    </button>
+                  </div>
+                  <div class="accent-picker">
+                    <label>Accent Color</label>
+                    <div class="accent-colors">
+                      <button type="button" class="accent-swatch active" data-accent="indigo" style="background:#6366f1"></button>
+                      <button type="button" class="accent-swatch" data-accent="violet" style="background:#8b5cf6"></button>
+                      <button type="button" class="accent-swatch" data-accent="cyan" style="background:#06b6d4"></button>
+                      <button type="button" class="accent-swatch" data-accent="emerald" style="background:#10b981"></button>
+                      <button type="button" class="accent-swatch" data-accent="rose" style="background:#f43f5e"></button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Notifications -->
+              <div class="settings-panel" id="settings-notifications">
+                <article class="card glass">
+                  <h2>Notification Settings</h2>
+                  <ul class="toggle-list">
+                    <li><span>Email notifications</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></li>
+                    <li><span>Invoice reminders</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></li>
+                    <li><span>Project deadline alerts</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></li>
+                    <li><span>Meeting reminders</span><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></li>
+                    <li><span>Weekly digest</span><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></li>
+                  </ul>
+                </article>
+              </div>
+
+              <!-- Security -->
+              <div class="settings-panel" id="settings-security">
+                <article class="card glass">
+                  <h2>Security Settings</h2>
+                  <form class="settings-form">
+                    <label>Current Password<input type="password" placeholder="••••••••"></label>
+                    <label>New Password<input type="password" placeholder="••••••••"></label>
+                    <label>Confirm Password<input type="password" placeholder="••••••••"></label>
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                  </form>
+                  <div class="security-extra">
+                    <h3>Two-Factor Authentication</h3>
+                    <p>Add an extra layer of security to your account.</p>
+                    <button type="button" class="btn btn-secondary">Enable 2FA</button>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="modal-overlay" hidden></div>
+
+  <div class="modal" id="modal-client" role="dialog" aria-labelledby="modal-client-title" hidden>
+    <div class="modal-header">
+      <h2 id="modal-client-title">Add Client</h2>
+      <button type="button" class="modal-close" data-close>&times;</button>
+    </div>
+    <form id="client-form" class="modal-body">
+      <input type="hidden" id="client-edit-id">
+      <label>Name<input type="text" id="client-name" required></label>
+      <label>Email<input type="email" id="client-email" required></label>
+      <label>Company<input type="text" id="client-company"></label>
+      <label>Phone<input type="tel" id="client-phone"></label>
+      <label>Status
+        <select id="client-status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </label>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Client</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="modal-invoice" role="dialog" aria-labelledby="modal-invoice-title" hidden>
+    <div class="modal-header">
+      <h2 id="modal-invoice-title">Generate Invoice</h2>
+      <button type="button" class="modal-close" data-close>&times;</button>
+    </div>
+    <form id="invoice-form" class="modal-body">
+      <label>Client
+        <select id="invoice-client" required></select>
+      </label>
+      <label>Amount ($)<input type="number" id="invoice-amount" min="0" step="0.01" required></label>
+      <label>Description<textarea id="invoice-desc" rows="2"></textarea></label>
+      <label>Due Date<input type="date" id="invoice-due" required></label>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Generate</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal modal-sm" id="modal-quick" role="dialog" hidden>
+    <div class="modal-header">
+      <h2>Quick Add</h2>
+      <button type="button" class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body quick-add-menu">
+      <button type="button" data-quick="client">👤 New Client</button>
+      <button type="button" data-quick="project">📁 New Project</button>
+      <button type="button" data-quick="invoice">📄 New Invoice</button>
+      <button type="button" data-quick="task">✓ New Task</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- AI Assistant -->
+  <div class="ai-chat" id="ai-chat">
+    <button type="button" class="ai-toggle" id="ai-toggle" aria-label="AI Assistant">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-1v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-1H9v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 12 2z"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/></svg>
+      <span class="ai-pulse"></span>
+    </button>
+    <div class="ai-panel glass" id="ai-panel" hidden>
+      <div class="ai-header">
+        <h3>AI Assistant</h3>
+        <span class="badge gradient-badge">Beta</span>
+        <button type="button" class="modal-close" id="ai-close">&times;</button>
+      </div>
+      <div class="ai-messages" id="ai-messages">
+        <div class="ai-msg bot">Hi Alex! I can help you draft invoices, summarize projects, or plan your week. What would you like to do?</div>
+      </div>
+      <form class="ai-input-form" id="ai-form">
+        <input type="text" placeholder="Ask anything..." id="ai-input" autocomplete="off">
+        <button type="submit" aria-label="Send">→</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button type="button" class="fab" id="fab" aria-label="Quick actions">
+    <span class="fab-icon">+</span>
+  </button>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
